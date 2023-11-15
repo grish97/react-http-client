@@ -1,0 +1,14 @@
+{
+  "user": {
+    "id": 4568,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "example@user.com",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkdyaXNoYSBWYXNpbHlhbiIsImlhdCI6MTUxNjIzOTAyMn0.pktmCFTt-XTJm6U7TZkbSle0FKXnyuYc8wpDqoKCTZg",
+    "refreshToken": "fdb8fdbecf1d03ce5e6125c067733c0d51de209c"
+  },
+  "flags": {
+    "hasAddress": false,
+    "hasPaymentInfo": false
+  }
+}

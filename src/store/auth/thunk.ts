@@ -1,24 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createAppAsyncThunk } from "@/utils/thunk";
 import { apiEndpoints, privateClient, publicClient } from "@http";
-
-export interface CounterState {
-  user: any;
-}
-
-const initialState: CounterState = {
-  user: null,
-}
-
-export const authSlice = createSlice({
-  name: "auth",
-  initialState: initialState,
-  reducers: {},
-});
+import { createAppAsyncThunk } from "@utils/thunk";
 
 export const refreshToken = createAppAsyncThunk(
   "auth/refreshToken",
-  async (params, { rejectWithValue }) => {
+  async () => {
     const userEmail = localStorage.getItem("userEmail");
     const rToken = localStorage.getItem("refreshToken");
 
@@ -28,9 +13,14 @@ export const refreshToken = createAppAsyncThunk(
         data: {
           username: userEmail,
           deviceIdentifier: "c58ed65d-5621-4be9-9a28-a2f524e86618",
-          token: rToken,
+          refreshToken: rToken,
         },
       });
+
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userEmail", response.data.email);
+      localStorage.setItem("userName", response.data.firstName);
 
       return response.data;
     } catch (refreshError: any) {
@@ -41,12 +31,17 @@ export const refreshToken = createAppAsyncThunk(
 
 export const login = createAppAsyncThunk<any, any>(
   "auth/login",
-  async (credentials, { rejectWithValue }) => {
+  async (credentials) => {
     try {
       const response = await publicClient.post({
         route: apiEndpoints.API_LOGIN,
         data: credentials,
       });
+
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userEmail", response.data.email);
+      localStorage.setItem("userName", response.data.firstName);
 
       return response.data;
     } catch (refreshError: any) {
@@ -55,13 +50,12 @@ export const login = createAppAsyncThunk<any, any>(
   },
 );
 
-export const getInitFlags = createAppAsyncThunk<any>(
+export const getInitFlags = createAppAsyncThunk(
   "auth/getInitflags",
-  async (credentials, { rejectWithValue }) => {
+  async () => {
     try {
-      const response = await publicClient.post({
-        route: apiEndpoints.API_LOGIN,
-        data: credentials,
+      const response = await privateClient.post({
+        route: apiEndpoints.API_INIT_FLAGS,
       });
 
       return response.data;
@@ -70,5 +64,3 @@ export const getInitFlags = createAppAsyncThunk<any>(
     }
   },
 );
-
-export default authSlice;

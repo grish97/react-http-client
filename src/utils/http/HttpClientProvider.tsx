@@ -2,7 +2,7 @@ import { Component, ReactNode } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { IClientRequestConfig } from "@lib/http-client";
 import { privateClient } from "@http";
-import { refreshToken } from "@store/authSlice";
+import { refreshToken } from "@store/auth/thunk";
 
 interface IOwnProps {
   children: ReactNode,

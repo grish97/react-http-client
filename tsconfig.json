@@ -9,7 +9,17 @@
     "paths": {
       "@/*": ["./*"],
       "@http": ["./utils/http"],
+      "@utils/*": ["./utils/*"],
+      "@utils": ["./utils"],
       "@store": ["./store"],
+      "@store/*": ["./store/*"],
+      "@testing": ["./@testing"],
+      "@mock/*": ["./mock/*"],
+      "@mock": ["./mock"],
+      "@components": ["./components"],
+      "@components/*": ["./components/*"],
+      "@pages": ["./pages"],
+      "@pages/*": ["./pages/*"],
 
       // Http Client Library
       "@lib/http-client": ["./@lib"],
@@ -22,6 +32,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
 
     /* Linting */
     "strict": true,

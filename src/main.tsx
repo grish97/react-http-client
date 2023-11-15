@@ -1,18 +1,26 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import { store } from "@store";
-import { HttpClientProvider } from "@http";
+import {StoreProvider} from "@store";
+import {HttpClientProvider} from "@http";
+import { MuiThemeProvider } from "@components/mui-theme";
 import App from "./App";
+import {enableMocking} from "@mock/browser/enable.mock";
 import "./index.css";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(
-  <Provider store={store}>
-    <HttpClientProvider>
-      <App />
-    </HttpClientProvider>
-  </Provider>
-);
+function bootstrap() {
+  const root = ReactDOM.createRoot(
+    document.getElementById("root") as HTMLElement
+  );
+
+  root.render(
+    <MuiThemeProvider>
+      <StoreProvider>
+        <HttpClientProvider>
+          <App/>
+        </HttpClientProvider>
+      </StoreProvider>
+    </MuiThemeProvider>
+  );
+}
+
+// Mock should be enabled before rendering application
+enableMocking().then(bootstrap);

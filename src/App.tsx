@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { login, getInitFlags } from "@store/authSlice";
+import {useCallback, useEffect, useState} from "react";
+import { login, getInitFlags } from "@store/auth/thunk";
 import { useAppDispatch } from "@/hooks";
+import Playground from "@pages/playground";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -18,34 +19,22 @@ function App() {
 
   const loginUser = async () => {
     const { payload: userData } = await dispatch(login({
-      email: "grisha@skipti.com",
-      password: "Skipti123",
-      deviceIdentifier: "c58ed65d-5621-4be9-9a28-a2f524e86618"
+      email: "example@user.com",
+      password: "user0000",
     }));
 
     setLoggedIn(true);
-
-    localStorage.setItem("refreshToken", userData.data.refreshToken);
-    localStorage.setItem("token", userData.data.token);
-    localStorage.setItem("userEmail", userData.data.email);
   };
 
-  return <div className="App">
-    <div>React Api Client</div>
+  const getUserFlags = useCallback(() => {
+    dispatch(getInitFlags());
+  }, []);
 
-    {isLoggedIn ? (
-      <>
-        <p>You are logged in</p>
-        <button onClick={() => {
-          getInitFlags();
-          getInitFlags();
-          getInitFlags();
-        }}>Get Flags</button>
-      </>
-    ) : (
-      <button onClick={loginUser}>Login</button>
-    )}
-  </div>;
+  return (
+    <main>
+      <Playground />
+    </main>
+  );
 }
 
 export default App;
