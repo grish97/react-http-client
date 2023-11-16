@@ -2,7 +2,8 @@ import { Component, ReactNode } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { IClientRequestConfig } from "@lib/http-client";
 import { privateClient } from "@http";
-import { refreshToken } from "@store/auth/thunk";
+import { refreshToken } from "@store/auth/authSlice";
+import { localStorageConst } from '@utils/constants/localStorage';
 
 interface IOwnProps {
   children: ReactNode,
@@ -28,7 +29,7 @@ class HttpClientProvider extends Component<TPropType> {
 
     this.requestInterceptor = privateClient.useRequestInterceptor(
       async (config) => {
-        const userToken = localStorage.getItem("token");
+        const userToken = localStorage.getItem(localStorageConst.ACCESS_TOKEN);
 
         /** requiresAuth special flag for check is request need access token */
         if (config?.headers && config.requiresAuth && userToken) {

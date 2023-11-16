@@ -6,6 +6,11 @@ export const apiEndpoints: TApiEndpoints = {
     method: "POST",
     isRequiredAuth: false,
   },
+  CURRENT_USER: {
+    url: "user",
+    method: "GET",
+    isRequiredAuth: true,
+  },
   API_REGISTER: {
     url: "register",
     method: "POST",

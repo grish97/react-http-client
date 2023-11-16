@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import slice from "./auth/slice";
+import authSlice from "./auth/authSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: slice.reducer,
+    auth: authSlice.reducer,
   },
 });
 
@@ -13,4 +13,4 @@ export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
 
- export { StoreProvider } from "./StoreProvider";
+export { StoreProvider } from "./StoreProvider";

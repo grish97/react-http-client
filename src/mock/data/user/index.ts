@@ -5,7 +5,7 @@ import db from "@mock/data/db.json";
  * Get User flags
  */
 export function getUserFlags() {
-  return db.flags
+  return db.flags;
 }
 
 /**
