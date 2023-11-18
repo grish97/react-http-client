@@ -10,6 +10,7 @@ type AsyncThunkConfig = {
   pendingMeta?: unknown;
   fulfilledMeta?: unknown;
   rejectedMeta?: unknown;
-}
+};
 
-export const createAppAsyncThunk = createAsyncThunk.withTypes<AsyncThunkConfig>();
+export const createAppAsyncThunk =
+  createAsyncThunk.withTypes<AsyncThunkConfig>();

@@ -1,9 +1,10 @@
 import Axios, {
   AxiosInstance,
-  AxiosInterceptorOptions, AxiosRequestConfig,
+  AxiosInterceptorOptions,
+  AxiosRequestConfig,
   AxiosResponse,
   CreateAxiosDefaults,
-  InternalAxiosRequestConfig
+  InternalAxiosRequestConfig,
 } from "axios";
 import URLParser from "./URLParser";
 
@@ -46,7 +47,11 @@ class HttpClient {
     return this.client(configs);
   }
 
-  public get<TR = any>({ route, replacements, config }: Omit<TRequestArguments, "data">): Promise<AxiosResponse<TR>> {
+  public get<TR = any>({
+    route,
+    replacements,
+    config,
+  }: Omit<TRequestArguments, "data">): Promise<AxiosResponse<TR>> {
     let url = this.genRequestUrl(route.url, replacements);
 
     config = this.bindAuthFlag(route, config);
@@ -54,51 +59,74 @@ class HttpClient {
     return this.client.get(url, config);
   }
 
-  public post<TR = any>({ route, replacements, data, config }: TRequestArguments): Promise<AxiosResponse<TR>> {
+  public post<TR = any>({
+    route,
+    replacements,
+    data,
+    config,
+  }: TRequestArguments): Promise<AxiosResponse<TR>> {
     config = this.bindAuthFlag(route, config);
 
     return this.client.post(
       this.genRequestUrl(route.url, replacements),
       data,
-      config
+      config,
     );
   }
 
-  public put<TR = any>({ route, data, replacements, config }: TRequestArguments): Promise<AxiosResponse<TR>> {
+  public put<TR = any>({
+    route,
+    data,
+    replacements,
+    config,
+  }: TRequestArguments): Promise<AxiosResponse<TR>> {
     config = this.bindAuthFlag(route, config);
 
     return this.client.put(
       this.genRequestUrl(route.url, replacements),
       data,
-      config
+      config,
     );
   }
 
-  public delete<TR = any>({ route, replacements, config }: Omit<TRequestArguments, "data">): Promise<AxiosResponse<TR>> {
+  public delete<TR = any>({
+    route,
+    replacements,
+    config,
+  }: Omit<TRequestArguments, "data">): Promise<AxiosResponse<TR>> {
     config = this.bindAuthFlag(route, config);
 
     return this.client.delete(
       this.genRequestUrl(route.url, replacements),
-      config
+      config,
     );
   }
 
-  public head<TR = any>({ route, replacements, config }: Omit<TRequestArguments, "data">): Promise<AxiosResponse<TR>> {
+  public head<TR = any>({
+    route,
+    replacements,
+    config,
+  }: Omit<TRequestArguments, "data">): Promise<AxiosResponse<TR>> {
     config = this.bindAuthFlag(route, config);
 
     return this.client.head(
       this.genRequestUrl(route.url, replacements),
-      config
+      config,
     );
   }
 
-  public patch<TR = any>({ route, data, replacements, config }: TRequestArguments): Promise<AxiosResponse<TR>> {
+  public patch<TR = any>({
+    route,
+    data,
+    replacements,
+    config,
+  }: TRequestArguments): Promise<AxiosResponse<TR>> {
     config = this.bindAuthFlag(route, config);
 
     return this.client.patch(
       this.genRequestUrl(route.url, replacements),
       data,
-      config
+      config,
     );
   }
 
@@ -109,8 +137,11 @@ class HttpClient {
    * @param {AxiosRequestConfig | undefined} config
    * @return AxiosRequestConfig
    */
-  private bindAuthFlag(route: TApiEndpoint, config?: AxiosRequestConfig): AxiosRequestConfig {
-    config = config || {} as AxiosRequestConfig;
+  private bindAuthFlag(
+    route: TApiEndpoint,
+    config?: AxiosRequestConfig,
+  ): AxiosRequestConfig {
+    config = config || ({} as AxiosRequestConfig);
     config.requiresAuth = route.isRequiredAuth;
 
     return config;
@@ -132,10 +163,19 @@ class HttpClient {
    * @return number
    */
   public useRequestInterceptor(
-    onFulfilled?: ((value: InternalAxiosRequestConfig) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>) | null,
+    onFulfilled?:
+      | ((
+          value: InternalAxiosRequestConfig,
+        ) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>)
+      | null,
     onRejected?: ((error: any) => any) | null,
-    options?: AxiosInterceptorOptions) {
-    return this.client.interceptors.request.use(onFulfilled, onRejected, options);
+    options?: AxiosInterceptorOptions,
+  ) {
+    return this.client.interceptors.request.use(
+      onFulfilled,
+      onRejected,
+      options,
+    );
   }
 
   /**
@@ -143,11 +183,17 @@ class HttpClient {
    * @return number
    */
   public useResponseInterceptor(
-    onFulfilled?: ((value:AxiosResponse) => AxiosResponse | Promise<AxiosResponse>) | null,
+    onFulfilled?:
+      | ((value: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>)
+      | null,
     onRejected?: ((error: any) => any) | null,
-    options?: AxiosInterceptorOptions
+    options?: AxiosInterceptorOptions,
   ) {
-    return this.client.interceptors.response.use(onFulfilled, onRejected, options);
+    return this.client.interceptors.response.use(
+      onFulfilled,
+      onRejected,
+      options,
+    );
   }
 
   /**
@@ -156,7 +202,10 @@ class HttpClient {
    * @param {number} responseInterceptor
    * @return void
    */
-  public ejectInterceptors(requestInterceptor: number, responseInterceptor: number) {
+  public ejectInterceptors(
+    requestInterceptor: number,
+    responseInterceptor: number,
+  ) {
     this.client.interceptors.request.eject(requestInterceptor);
     this.client.interceptors.response.eject(responseInterceptor);
   }

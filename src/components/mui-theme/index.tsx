@@ -1,16 +1,16 @@
-import {FC, ReactNode} from "react";
-import {createTheme, ThemeProvider} from "@mui/material/styles";
+import { FC, ReactNode } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 interface IPropType {
-  children: ReactNode,
+  children: ReactNode;
 }
 
 const muiDefaultTheme = createTheme({
   palette: {
-    mode: "dark"
+    mode: "dark",
   },
 });
 
 export const MuiThemeProvider: FC<IPropType> = ({ children }) => {
-  return <ThemeProvider theme={muiDefaultTheme} children={children} />
-}
+  return <ThemeProvider theme={muiDefaultTheme} children={children} />;
+};

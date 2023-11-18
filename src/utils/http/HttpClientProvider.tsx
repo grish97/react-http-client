@@ -3,10 +3,10 @@ import { connect, ConnectedProps } from "react-redux";
 import { IClientRequestConfig } from "@lib/http-client";
 import { privateClient } from "@http";
 import { refreshToken } from "@store/auth/authSlice";
-import { localStorageConst } from '@utils/constants/localStorage';
+import { localStorageConst } from "@utils/constants/localStorage";
 
 interface IOwnProps {
-  children: ReactNode,
+  children: ReactNode;
 }
 
 const connector = connect(null, {
@@ -55,7 +55,10 @@ class HttpClientProvider extends Component<TPropType> {
             try {
               const accessToken = await this.refreshUserToken();
 
-              privateClient.addCommonHeaders("Authorization", `Bearer ${accessToken}`);
+              privateClient.addCommonHeaders(
+                "Authorization",
+                `Bearer ${accessToken}`,
+              );
 
               originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
@@ -86,12 +89,16 @@ class HttpClientProvider extends Component<TPropType> {
   }
 
   componentWillUnmount() {
-    privateClient.ejectInterceptors(this.requestInterceptor, this.responseInterceptor);
+    privateClient.ejectInterceptors(
+      this.requestInterceptor,
+      this.responseInterceptor,
+    );
   }
 
   public async processFailedRequests(accessToken: string) {
     while (this.failedRequestsQueue.length > 0) {
-      const failedRequest = this.failedRequestsQueue.shift() as IClientRequestConfig;
+      const failedRequest =
+        this.failedRequestsQueue.shift() as IClientRequestConfig;
       failedRequest.headers = failedRequest.headers || {};
 
       failedRequest.headers.Authorization = `Bearer ${accessToken}`;
@@ -115,7 +122,7 @@ class HttpClientProvider extends Component<TPropType> {
   }
 
   render() {
-    return <>{this.props.children}</>
+    return <>{this.props.children}</>;
   }
 }
 

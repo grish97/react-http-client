@@ -26,4 +26,3 @@ export function updateUserToken() {
 export function getUser() {
   return db.user;
 }
-

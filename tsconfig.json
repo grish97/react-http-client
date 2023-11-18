@@ -9,6 +9,7 @@
     "paths": {
       "@/*": ["./*"],
       "@http": ["./utils/http"],
+      "@http/*": ["./utils/http/*"],
       "@utils/*": ["./utils/*"],
       "@utils": ["./utils"],
       "@store": ["./store"],
@@ -22,7 +23,7 @@
       "@pages/*": ["./pages/*"],
 
       // Http Client Library
-      "@lib/http-client": ["./@lib"],
+      "@lib/http-client": ["./@lib"]
     },
 
     /* Bundler mode */

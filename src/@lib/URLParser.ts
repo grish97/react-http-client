@@ -24,7 +24,7 @@ export default class URLParser {
     // replacement data not provided
     if (!replacements || (replacements && !Object.keys(replacements).length)) {
       this.helperLog(
-        "URL need values for placeholders to parse. Please fill your replacement object"
+        "URL need values for placeholders to parse. Please fill your replacement object",
       );
       return parsedURL;
     }
@@ -54,13 +54,13 @@ export default class URLParser {
 
       if (!stringValue) {
         this.helperLog(
-          "Missing Search params values. If it will work without that, you can ignore this hint"
+          "Missing Search params values. If it will work without that, you can ignore this hint",
         );
       }
 
       parsedURL = parsedURL.replace(
         `?${this.queryPlaceholder}`,
-        stringValue ? `?${stringValue}` : ""
+        stringValue ? `?${stringValue}` : "",
       );
     }
 
@@ -73,7 +73,7 @@ export default class URLParser {
    * @return {string}
    */
   public static objectToQueryString(
-    queryStringObject: TURLReplacement["queryString"]
+    queryStringObject: TURLReplacement["queryString"],
   ) {
     if (
       !queryStringObject ||
@@ -110,7 +110,7 @@ export default class URLParser {
     console.log(
       "%c API_ENDPOINT_URL_ISSUE",
       "color: white; fontSize: 21px; background: red",
-      ...message
+      ...message,
     );
   }
 }

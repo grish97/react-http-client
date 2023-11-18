@@ -9,7 +9,7 @@ export const refreshToken = createAppAsyncThunk(
     const rToken = localStorage.getItem(localStorageConst.REFRESH_TOKEN);
 
     try {
-      const response =  await privateClient.post({
+      const response = await privateClient.post({
         route: apiEndpoints.API_REFRESH_TOKEN,
         data: {
           username: userEmail,
@@ -18,10 +18,16 @@ export const refreshToken = createAppAsyncThunk(
         },
       });
 
-      localStorage.setItem(localStorageConst.REFRESH_TOKEN, response.data.refreshToken);
+      localStorage.setItem(
+        localStorageConst.REFRESH_TOKEN,
+        response.data.refreshToken,
+      );
       localStorage.setItem(localStorageConst.ACCESS_TOKEN, response.data.token);
       localStorage.setItem(localStorageConst.USER_EMAIL, response.data.email);
-      localStorage.setItem(localStorageConst.USER_NAME, response.data.firstName);
+      localStorage.setItem(
+        localStorageConst.USER_NAME,
+        response.data.firstName,
+      );
 
       return response.data;
     } catch (refreshError: any) {
@@ -39,10 +45,16 @@ export const login = createAppAsyncThunk<any, any>(
         data: credentials,
       });
 
-      localStorage.setItem(localStorageConst.REFRESH_TOKEN, response.data.refreshToken);
+      localStorage.setItem(
+        localStorageConst.REFRESH_TOKEN,
+        response.data.refreshToken,
+      );
       localStorage.setItem(localStorageConst.ACCESS_TOKEN, response.data.token);
       localStorage.setItem(localStorageConst.USER_EMAIL, response.data.email);
-      localStorage.setItem(localStorageConst.USER_NAME, response.data.firstName);
+      localStorage.setItem(
+        localStorageConst.USER_NAME,
+        response.data.firstName,
+      );
 
       return response.data;
     } catch (refreshError: any) {
@@ -66,17 +78,14 @@ export const getInitFlags = createAppAsyncThunk(
   },
 );
 
-export const getUser = createAppAsyncThunk(
-  "auth/getUser",
-  async () => {
-    try {
-      const response = await privateClient.post({
-        route: apiEndpoints.CURRENT_USER,
-      });
+export const getUser = createAppAsyncThunk("auth/getUser", async () => {
+  try {
+    const response = await privateClient.post({
+      route: apiEndpoints.CURRENT_USER,
+    });
 
-      return response.data;
-    } catch (refreshError: any) {
-      throw refreshError;
-    }
-  },
-);
+    return response.data;
+  } catch (refreshError: any) {
+    throw refreshError;
+  }
+});

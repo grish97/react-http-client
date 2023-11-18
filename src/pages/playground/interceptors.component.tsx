@@ -1,21 +1,31 @@
-import { ChangeEvent, FC, useCallback, useState } from "react";
-import { Box, Button, Grid, Paper, TextField } from "@mui/material";
-import { localStorageConst } from "@utils/constants/localStorage.ts";
-import { useAppDispatch, useAppSelector } from '@/hooks';
-import { getInitFlags, getUser } from '@store/auth/thunk';
-import { selectUser } from '@store/auth/selectors.ts';
+import {ChangeEvent, FC, useCallback, useEffect, useState} from "react";
+import {Box, Button, Grid, Paper, TextField, Typography} from "@mui/material";
+import {localStorageConst} from "@utils/constants/localStorage.ts";
+import {useAppDispatch, useAppSelector} from "@/hooks";
+import {getInitFlags} from "@store/auth/thunk";
+import {selectUser} from "@store/auth/selectors.ts";
 
-interface IPropType {}
+interface IPropType {
+}
 
 const Interceptors: FC<IPropType> = () => {
   const dispatch = useAppDispatch();
-  const { user, error } = useAppSelector(selectUser);
+  const {user} = useAppSelector(selectUser);
 
   const [response, setResponse] = useState(null);
   const [token, setToken] = useState({
-    access: user?.accessToken || "",
-    refresh: user?.refreshToken || "",
+    access: "",
+    refresh: "",
   });
+
+  useEffect(() => {
+    if (user?.id) {
+      setToken({
+        access: user.token,
+        refresh: user.refreshToken
+      });
+    }
+  }, [user]);
 
   /**
    * Handler for change tokens
@@ -24,8 +34,8 @@ const Interceptors: FC<IPropType> = () => {
     const inputName = e.target.name;
     const value = e.target.value;
 
-    setToken({ ...token, [inputName]: value });
-  }, []);
+    setToken({...token, [inputName]: value});
+  }, [token]);
 
   const onSubmitRequest = useCallback(async () => {
     // update storage tokens
@@ -33,13 +43,14 @@ const Interceptors: FC<IPropType> = () => {
     localStorage.setItem(localStorageConst.REFRESH_TOKEN, token.refresh);
 
     // make request
-    // const response = await dispatch(getInitFlags());
-    const response = await dispatch(getUser());
-
-    console.log(response);
+    const response = await dispatch(getInitFlags());
 
     setResponse(response.payload);
   }, [token]);
+
+  const handleClearStorage = useCallback(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     <Grid
@@ -49,7 +60,16 @@ const Interceptors: FC<IPropType> = () => {
       alignItems="center"
     >
       <Grid item={true} md={5}>
-        <Box style={{ display: "flex", flexDirection: "column" }}>
+        <Typography mb="30px" color="#808080">
+          This is mostly describe how is working request interceptors part of application.
+          <br />
+          You can modify Access and Refresh tokens and make private request
+          which uses access token to make a request and refresh token to update
+          broken access token. In case if you modify refresh token you will receive
+          failed request, because it should be valid token to get new access token.
+        </Typography>
+
+        <Box style={{display: "flex", flexDirection: "column"}}>
           <TextField
             id="access"
             name="access"
@@ -63,15 +83,25 @@ const Interceptors: FC<IPropType> = () => {
             name="refresh"
             label="Refresh Token"
             variant="standard"
-            sx={{ my: "30px" }}
+            sx={{my: "30px"}}
             value={token.refresh}
             onChange={onChangeForm}
           />
+        </Box>
+
+        <Box display="flex" flexDirection="row" justifyContent="space-between">
+          <Button
+            color="primary"
+            sx={{alignSelf: "flex-start"}}
+            onClick={handleClearStorage}
+          >
+            Clear Storage
+          </Button>
 
           <Button
             variant="contained"
             color="primary"
-            sx={{ alignSelf: "flex-end" }}
+            sx={{alignSelf: "flex-end"}}
             onClick={onSubmitRequest}
           >
             Submit Request
@@ -82,7 +112,7 @@ const Interceptors: FC<IPropType> = () => {
       <Grid item={true} md={6}>
         <h3>Result</h3>
 
-        <Paper elevation={2} style={{ minHeight: "500px", padding: "20px" }}>
+        <Paper elevation={2} style={{minHeight: "500px", padding: "20px"}}>
           <code
             style={{
               whiteSpace: "pre-wrap",

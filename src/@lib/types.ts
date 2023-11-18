@@ -25,8 +25,7 @@ export type TRequestArguments = {
 
 export interface IClientRequestConfig extends AxiosRequestConfig {}
 
-
-declare module 'axios' {
+declare module "axios" {
   interface AxiosRequestConfig {
     requiresAuth?: boolean;
   }

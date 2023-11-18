@@ -1,8 +1,9 @@
 import db from "@mock/data/db.json";
 
 export function generateToken() {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let token = '';
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let token = "";
   for (let i = 0; i < 32; i++) {
     token += characters[Math.floor(Math.random() * characters.length)];
   }
@@ -10,8 +11,9 @@ export function generateToken() {
 }
 
 export function generateRefreshToken() {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let refreshToken = '';
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let refreshToken = "";
   for (let i = 0; i < 64; i++) {
     refreshToken += characters[Math.floor(Math.random() * characters.length)];
   }

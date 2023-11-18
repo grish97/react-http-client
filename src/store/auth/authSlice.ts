@@ -28,9 +28,11 @@ export const authSlice = createSlice({
       state.user = action.payload;
     });
 
+
     builder
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.error = null;
       })
       .addCase(refreshToken.rejected, (state, action) => {
         state.error = action.payload;
@@ -38,6 +40,8 @@ export const authSlice = createSlice({
   },
 });
 
+const { reducer } = authSlice;
+
 export * from "./thunk.ts";
 
-export default authSlice;
+export default reducer;
