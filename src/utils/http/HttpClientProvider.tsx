@@ -1,6 +1,6 @@
 import { Component, ReactNode } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { IClientRequestConfig } from "@lib/http-client";
+import { IClientRequestConfig } from "@vasg/http-client";
 import { privateClient } from "@http";
 import { refreshToken } from "@store/auth/authSlice";
 import { localStorageConst } from "@utils/constants/localStorage";

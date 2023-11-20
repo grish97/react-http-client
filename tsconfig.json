@@ -21,9 +21,6 @@
       "@components/*": ["./components/*"],
       "@pages": ["./pages"],
       "@pages/*": ["./pages/*"],
-
-      // Http Client Library
-      "@lib/http-client": ["./@lib"]
     },
 
     /* Bundler mode */

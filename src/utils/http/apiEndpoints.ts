@@ -1,4 +1,4 @@
-import { TApiEndpoints } from "@lib/http-client";
+import { TApiEndpoints } from "@vasg/http-client";
 
 export const apiEndpoints: TApiEndpoints = {
   API_LOGIN: {

@@ -22,7 +22,6 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "src/components"),
       "@pages": path.resolve(__dirname, "src/pages"),
       "@testing": path.resolve(__dirname, "src/@testing"),
-      "@lib/http-client": path.resolve(__dirname, "src/@lib"),
     },
   },
   plugins: [react()],
